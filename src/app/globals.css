@@ -1,26 +1,174 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-brand: #f59e0b;
+  --color-brand-light: #fbbf24;
+  --color-brand-dark: #d97706;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Mapbox overrides for dark theme */
+.mapboxgl-popup-content {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+  border-radius: 12px !important;
+  padding: 0 !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid #334155 !important;
+}
+.mapboxgl-popup-tip {
+  border-top-color: #1e293b !important;
+}
+.mapboxgl-ctrl-group {
+  background: #1e293b !important;
+  border-radius: 8px !important;
+  border: 1px solid #334155 !important;
+}
+.mapboxgl-ctrl-group button {
+  background-color: transparent !important;
+}
+.mapboxgl-ctrl-group button + button {
+  border-top: 1px solid #334155 !important;
+}
+.mapboxgl-ctrl-group button:hover {
+  background-color: #334155 !important;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, border-color, color, opacity;
+  transition-duration: 150ms;
+}
+
+/* Input focus glow */
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.3);
+}
+
+/* Animation for route lines */
+@keyframes routePulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Mapbox popup close button */
+.mapboxgl-popup-close-button {
+  color: #94a3b8 !important;
+  font-size: 18px !important;
+  padding: 4px 8px !important;
+  right: 4px !important;
+  top: 4px !important;
+}
+.mapboxgl-popup-close-button:hover {
+  background: transparent !important;
+  color: #f8fafc !important;
+}
+
+/* Mapbox popup anchor variants */
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  border-top-color: #1e293b !important;
+}
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: #1e293b !important;
+}
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: #1e293b !important;
+}
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: #1e293b !important;
+}
+
+/* Hover popup — transparent wrapper, content styled inline */
+.trip-hover-popup .mapboxgl-popup-content {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.trip-hover-popup .mapboxgl-popup-tip {
+  display: none !important;
+}
+
+/* Geolocate control styling */
+.mapboxgl-ctrl-geolocate {
+  background-color: transparent !important;
+}
+.mapboxgl-user-location-dot {
+  background-color: #f59e0b !important;
+}
+.mapboxgl-user-location-dot::before {
+  background-color: #f59e0b !important;
 }

@@ -1,0 +1,40 @@
+import { pgTable, uuid, text, timestamp, boolean, index, uniqueIndex, integer, numeric, date } from 'drizzle-orm/pg-core';
+import { companyStatusEnum } from './enums';
+
+export const companies = pgTable(
+  'companies',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    name: text('name').notNull(),
+    slug: text('slug').notNull(),
+    vatNumber: text('vat_number'),
+    fiscalCode: text('fiscal_code'),
+    nccLicenseNumber: text('ncc_license_number').notNull(),
+    nccLicenseExpiry: date('ncc_license_expiry'),
+    address: text('address'),
+    city: text('city'),
+    province: text('province'),
+    region: text('region'),
+    postalCode: text('postal_code'),
+    phone: text('phone'),
+    email: text('email'),
+    pecEmail: text('pec_email'),
+    logoUrl: text('logo_url'),
+    description: text('description'),
+    status: companyStatusEnum('status').notNull().default('pending'),
+    ratingAvg: numeric('rating_avg', { precision: 3, scale: 2 }).notNull().default('0'),
+    ratingCount: integer('rating_count').notNull().default(0),
+    commissionRate: numeric('commission_rate', { precision: 4, scale: 2 }).notNull().default('15.00'),
+    isActive: boolean('is_active').notNull().default(true),
+    verifiedAt: timestamp('verified_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex('companies_slug_unique').on(t.slug),
+    index('companies_vat_number_idx').on(t.vatNumber),
+    index('companies_status_idx').on(t.status),
+    index('companies_deleted_at_idx').on(t.deletedAt),
+  ],
+);
